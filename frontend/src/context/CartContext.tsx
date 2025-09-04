@@ -12,6 +12,7 @@ type CartContextType = {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
+  deleteFromCart: (id: number) => void; // 👈 new function
   clearCart: () => void;
   cartCount: number;
 };
@@ -34,8 +35,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  // Remove item
+  // Remove one quantity (not delete entirely)
   const removeFromCart = (id: number) => {
+    setCart((prevCart) =>
+      prevCart
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0) // keep only items with quantity > 0
+    );
+  };
+
+  // Delete item completely
+  const deleteFromCart = (id: number) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
@@ -47,7 +59,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart, cartCount }}
+      value={{ cart, addToCart, removeFromCart, deleteFromCart, clearCart, cartCount }}
     >
       {children}
     </CartContext.Provider>
