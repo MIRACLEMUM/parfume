@@ -1,24 +1,26 @@
 // src/pages/Cart.tsx
 import { useCart } from "../context/CartContext";
-import { FaTrash, FaShoppingCart } from "react-icons/fa"; // ✅ added cart icon
+import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast"; // ✅ added
 
 const Cart = () => {
   const { cart, addToCart, removeFromCart, clearCart, deleteFromCart } = useCart();
 
+  // Calculate total
   const totalPrice = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
+  // WhatsApp checkout
   const handleWhatsAppCheckout = () => {
     if (cart.length === 0) {
       toast.error("Your cart is empty! 🛒");
       return;
     }
 
-    const phoneNumber = "2347064400428";
+    const phoneNumber = "2347064400428"; // 👈 your WhatsApp number
     const orderDetails = cart
       .map(
         (item) =>
@@ -34,48 +36,43 @@ const Cart = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-12 px-6">
-      <div className="max-w-4xl mx-auto bg-gray-900 shadow-2xl rounded-2xl p-6 border border-gray-700">
-        {/* ✅ Cart Header with Icon */}
-        <h1 className="flex items-center justify-center text-3xl font-bold mb-6 text-yellow-400 gap-3">
-          <FaShoppingCart className="text-yellow-500" />
-          Your Cart
-        </h1>
+    <section className="min-h-screen bg-gray-100 py-12 px-6">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
+        <h1 className="text-3xl font-bold mb-6 text-yellow-500">Your Cart</h1>
 
         {cart.length === 0 ? (
-          <div className="text-center py-16 bg-gray-800 rounded-xl shadow-inner">
-            <p className="text-xl text-gray-300 mb-6">
-              🛒 Your cart is empty
-            </p>
+          <div className="text-center py-10">
+            <p className="text-lg text-gray-500 mb-4">🛒 Your cart is empty</p>
             <Link
               to="/shop"
-              className="bg-yellow-500 text-black px-8 py-3 rounded-full shadow-lg hover:bg-yellow-600 transition font-semibold"
+              className="bg-yellow-500 text-white px-6 py-3 rounded-lg shadow hover:bg-yellow-600 transition"
             >
               Continue Shopping
             </Link>
           </div>
         ) : (
           <>
-            <ul className="divide-y divide-gray-700">
+            <ul className="divide-y divide-gray-200">
               {cart.map((item) => (
                 <li
                   key={item.id}
-                  className="flex justify-between items-center py-4 text-white"
+                  className="flex justify-between items-center py-4"
                 >
                   <div>
                     <h2 className="text-lg font-semibold">{item.name}</h2>
-                    <p className="text-yellow-400">
+                    <p className="text-gray-600">
                       ${item.price.toFixed(2)} × {item.quantity}
                     </p>
                   </div>
 
+                  {/* Quantity controls + Trash */}
                   <div className="flex items-center space-x-3">
                     <button
                       onClick={() => {
                         removeFromCart(item.id);
                         toast(`${item.name} quantity decreased ➖`);
                       }}
-                      className="bg-red-600 text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-700 transition"
+                      className="bg-red-500 text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-600 transition"
                     >
                       –
                     </button>
@@ -87,17 +84,18 @@ const Cart = () => {
                         addToCart({ ...item, quantity: 1 });
                         toast(`${item.name} quantity increased ➕`);
                       }}
-                      className="bg-green-600 text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-green-700 transition"
+                      className="bg-green-500 text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-green-600 transition"
                     >
                       +
                     </button>
 
+                    {/* Trash button */}
                     <button
                       onClick={() => {
                         deleteFromCart(item.id);
                         toast.error(`${item.name} removed from cart 🗑️`);
                       }}
-                      className="text-red-500 hover:text-red-700 transition ml-2"
+                      className="text-red-600 hover:text-red-800 transition ml-2"
                     >
                       <FaTrash size={18} />
                     </button>
@@ -106,8 +104,9 @@ const Cart = () => {
               ))}
             </ul>
 
+            {/* Total & Actions */}
             <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-              <h2 className="text-xl font-bold text-yellow-400">
+              <h2 className="text-xl font-bold">
                 Total: ${totalPrice.toFixed(2)}
               </h2>
 
@@ -117,14 +116,14 @@ const Cart = () => {
                     clearCart();
                     toast.error("Cart cleared 🧹");
                   }}
-                  className="bg-gray-800 text-white px-4 py-2 rounded-full hover:bg-gray-700 transition"
+                  className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
                 >
                   Clear Cart
                 </button>
 
                 <button
                   onClick={handleWhatsAppCheckout}
-                  className="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition"
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
                 >
                   Checkout with WhatsApp
                 </button>

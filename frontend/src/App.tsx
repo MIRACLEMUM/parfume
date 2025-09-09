@@ -1,6 +1,8 @@
+// src/App.tsx
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Toaster } from "react-hot-toast"; // ✅ react-hot-toast
 
 // Pages
 import Home from "./pages/Home";
@@ -29,7 +31,7 @@ function Layout() {
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </main>
-      {!hideFooter && <Footer />} {/* only show footer if not Home */}
+      {!hideFooter && <Footer />}
     </div>
   );
 }
@@ -38,6 +40,15 @@ function App() {
   return (
     <Router>
       <Layout />
+      {/* ✅ Toasts will appear in top-right corner */}
+      <Toaster 
+        position="top-right" 
+        reverseOrder={false} 
+        toastOptions={{
+          duration: 3000,
+          style: { background: '#333', color: '#fff' },
+        }}
+      />
     </Router>
   );
 }
