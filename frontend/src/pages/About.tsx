@@ -6,21 +6,32 @@ const About = () => {
     <div className="bg-black text-gray-200 font-sans">
       {/* Hero Section */}
       <section
-        className="bg-fixed bg-center bg-cover text-center py-32 px-6 relative"
-        style={{ backgroundImage: "url('/images/perfume-bg.jpg')" }}
+        className="relative flex items-center justify-center text-center min-h-[90vh] md:min-h-[100vh] px-6 bg-black overflow-hidden"
       >
-        <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center md:bg-[center_top] lg:bg-[center_20%] transition-all duration-700"
+          style={{
+            backgroundImage: "url('/images/la.png')",
+          }}
+        ></div>
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/70"></div>
+
+        {/* Text Content */}
         <div className="relative z-10">
           <motion.h1
-            className="text-5xl md:text-6xl font-extrabold text-yellow-400 tracking-wide font-serif"
+            className="text-4xl md:text-6xl font-extrabold text-yellow-400 tracking-wide font-serif drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             About Mimi Scent
           </motion.h1>
+
           <motion.p
-            className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto italic"
+            className="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto italic"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -81,28 +92,54 @@ const About = () => {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="max-w-5xl mx-auto py-20 px-6">
+      {/* Why Choose Us */}
+      <section className="max-w-6xl mx-auto py-20 px-6">
         <h2 className="text-4xl font-bold text-yellow-400 text-center mb-12 font-serif">
-          Our Journey
+          Why Choose Us
         </h2>
-        <div className="space-y-12 border-l-2 border-yellow-500 pl-8">
+        <div className="grid md:grid-cols-4 gap-8 text-center">
           {[
-            { year: "2019", text: "Mimi Scent was founded with a dream of redefining perfume luxury." },
-            { year: "2021", text: "Our first signature collection launched — a timeless success." },
-            { year: "2023", text: "We expanded globally, reaching perfume lovers across the world." },
+            { icon: "🌿", title: "Eco-Friendly", text: "Safe and sustainable perfume ingredients." },
+            { icon: "💎", title: "Premium Quality", text: "Crafted with sophistication and care." },
+            { icon: "🚚", title: "Fast Delivery", text: "Reliable shipping to your doorstep." },
+            { icon: "❤️", title: "Customer Love", text: "Our customers are our top priority." },
           ].map((item, i) => (
             <motion.div
               key={i}
-              className="relative"
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:shadow-yellow-500/40 transition"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.2 }}
               viewport={{ once: true }}
             >
-              <span className="absolute -left-5 top-1 w-3 h-3 bg-yellow-500 rounded-full shadow-lg shadow-yellow-600/40"></span>
-              <h4 className="text-xl font-bold text-yellow-400">{item.year}</h4>
-              <p className="text-gray-300 mt-2">{item.text}</p>
+              <div className="text-4xl mb-4">{item.icon}</div>
+              <h3 className="text-xl font-semibold text-yellow-400 mb-2">{item.title}</h3>
+              <p className="text-gray-300">{item.text}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="bg-gray-900 py-20 px-6">
+        <h2 className="text-4xl font-bold text-yellow-400 text-center mb-12 font-serif">
+          What Our Customers Say
+        </h2>
+        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+          {[
+            { name: "Ubong Edem", text: "I love Mimi Scent perfumes! Elegant and long-lasting." },
+            { name: "Blessing", text: "High quality and fast delivery. Truly impressed." },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              className="bg-black border border-yellow-500/40 p-6 rounded-2xl shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.2 }}
+              viewport={{ once: true }}
+            >
+              <p className="text-gray-300 italic">"{item.text}"</p>
+              <h4 className="mt-4 text-yellow-400 font-semibold">{item.name}</h4>
             </motion.div>
           ))}
         </div>

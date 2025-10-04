@@ -22,7 +22,7 @@ const Home = () => {
             transition={{ duration: 1 }}
             className="text-5xl md:text-7xl font-display font-bold leading-tight"
           >
-            <span className="text-gold">Luxury</span> in Every Drop
+            <span className="text-gold">Luxury</span> in Every Scent
           </motion.h1>
 
           <motion.p

@@ -16,15 +16,16 @@ const Shop = () => {
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
 
-    // ✅ toast for WhatsApp
     toast(`Opening WhatsApp for ${productName} 💬`, { icon: "📲" });
   };
 
-  // Filter + Search
+  // Filter + Search (search works independently of category)
   const filteredProducts = products.filter((p) => {
-    const matchesCategory = filter === "All" || p.category === filter;
-    const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
-    return matchesCategory && matchesSearch;
+    if (search.trim() !== "") {
+      return p.name.toLowerCase().includes(search.toLowerCase());
+    } else {
+      return filter === "All" || p.category === filter;
+    }
   });
 
   return (
@@ -81,34 +82,40 @@ const Shop = () => {
               <div className="p-6 flex flex-col justify-between text-center">
                 <div>
                   <h3 className="text-xl font-semibold text-white">{product.name}</h3>
-                  <p className="text-yellow-400 font-bold text-2xl mt-3">${product.price}</p>
+                  <p className="text-yellow-400 font-bold text-2xl mt-3">
+                    ₦{product.price.toLocaleString()} {/* price in naira */}
+                  </p>
                   <p className="text-xs text-gray-400 mt-1">
                     Category: {product.category}
                   </p>
                 </div>
 
-                <div className="mt-5 flex justify-center space-x-3">
-                  <button
-                    onClick={() => {
-                      addToCart({ ...product, quantity: 1 });
-                      toast.success(`${product.name} added to cart 🛒`);
-                    }}
-                    className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition"
-                  >
-                    Add to Cart
-                  </button>
-                  <button
-                    onClick={() => handleWhatsApp(product.name)}
-                    className="bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition"
-                  >
-                    WhatsApp
-                  </button>
-                  <Link
-                    to={`/product/${product.id}`}
-                    className="bg-black text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-900 transition"
-                  >
-                    Details
-                  </Link>
+                <div className="mt-5 flex flex-col space-y-3">
+                  <div className="w-full flex justify-between gap-4">
+                    <button
+                      onClick={() => handleWhatsApp(product.name)}
+                      className="bg-green-500 w-full text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition"
+                    >
+                      WhatsApp
+                    </button>
+                    <Link
+                      to={`/product/${product.id}`}
+                      className="bg-black w-full text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-900 transition"
+                    >
+                      Details
+                    </Link>
+                  </div>
+                  <div className="w-full">
+                    <button
+                      onClick={() => {
+                        addToCart({ ...product, quantity: 1 });
+                        toast.success(`${product.name} added to cart 🛒`);
+                      }}
+                      className="bg-yellow-500 w-full text-black px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
