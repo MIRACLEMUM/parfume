@@ -1,5 +1,6 @@
 // src/pages/Cart.tsx
-import { useCart } from "../context/CartContext";
+import { useCart } from "../context/useCart";
+
 import { FaTrash, FaShoppingCart } from "react-icons/fa"; 
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";

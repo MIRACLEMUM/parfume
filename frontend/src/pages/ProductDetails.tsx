@@ -1,7 +1,8 @@
 // src/pages/ProductDetails.tsx
 import { useState, } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../context/useCart";
+
 import { toast } from "react-hot-toast";
 import { FaStar, FaWhatsapp } from "react-icons/fa";
 

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+
 import { toast } from "react-hot-toast"; 
 import { products } from "../data/perfumes"; // ✅ now pulling from products.ts
 

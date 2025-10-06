@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, X } from "lucide-react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../context/useCart";
+
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
